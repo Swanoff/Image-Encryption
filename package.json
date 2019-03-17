@@ -1,0 +1,25 @@
+{
+  "name": "image-encryption",
+  "version": "1.0.0",
+  "description": "Encrypting b/w images using BlowFish Algorithm",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Swanoff/Image-Encryption.git"
+  },
+  "author": "Surya",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Swanoff/Image-Encryption/issues"
+  },
+  "homepage": "https://github.com/Swanoff/Image-Encryption#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "get-pixels": "^3.3.2"
+  }
+}

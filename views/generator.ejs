@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BlowFish Encryptor</title>
+    <!-- CDN for Bootstrap v3.3.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- CDN for Semantic UI v2.3.3 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <!-- CDN for jQuery 2.1.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<script>
+    $(document).ready(function(){
+
+        // function to shuffle the array elements since encryption algo is not yet implemented
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+            return array;
+        }
+
+        pixels = []
+        <% pixels.forEach(p => { %>
+            pixels.push(<%= p %>)
+        <% }) %>
+
+        // encryption simulation
+        pixels = shuffle(pixels)
+
+        // rendering encrypted pixels
+        pixels.forEach(function(i){
+            if (i === 0)
+                $('#generatorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: black; float: left;"></div>');
+            else if (i === 1)
+                $('#generatorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: white; float: left;"></div>');
+        });
+    });
+</script>
+
+<body>
+    <div id="generatorBox" style="width: 720px; height: 720px;">
+        <!-- Encrypted image forms here -->
+    </div>
+</body>
+</html>
