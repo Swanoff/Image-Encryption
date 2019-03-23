@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>BlowFish Encryptor</title>
+    <title>Image Encryptor</title>
     <!-- CDN for Bootstrap v3.3.7 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- CDN for Semantic UI v2.3.3 -->
@@ -15,6 +15,12 @@
 
 <script>
     $(document).ready(function(){
+
+        //Delay function
+        function sleep(ms)
+        {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
 
         // function to shuffle the array elements since encryption algo is not yet implemented
         function shuffle(array) {
@@ -37,22 +43,51 @@
             pixels.push(<%= p %>)
         <% }) %>
 
+        // rendering decrypted pixels
+        <% pixels.forEach(function(i){ %>
+            if (<%= i %> === 0)
+                $('#decryptorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: black; float: left;"></div>');
+            else if (<%= i %> === 1) 
+                $('#decryptorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: white; float: left;"></div>');
+        <% }); %>
+
         // encryption simulation
-        pixels = shuffle(pixels)
+        encrypt = shuffle( pixels )
 
         // rendering encrypted pixels
-        pixels.forEach(function(i){
+        encrypt.forEach(function(i){
             if (i === 0)
-                $('#generatorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: black; float: left;"></div>');
+                $('#encryptorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: black; float: left;"></div>');
             else if (i === 1)
-                $('#generatorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: white; float: left;"></div>');
+                $('#encryptorBox').append('<div style="width:' + <%= 720/width %> + 'px; height:' + <%= 720/height %> + 'px; background-color: white; float: left;"></div>');
         });
+
+        async function decrypt() {
+            for(var i=0; i< <%= width*height %>; i++)
+            {   
+                $('#progress').text(Math.round(((i+1)/(<%= width*height %>))*100));
+                e = $('#encryptorBox').children()[i];
+                $(e).hide();
+                await sleep(1);
+            }
+        }
+
+        setTimeout(decrypt(), 1000)
     });
 </script>
 
 <body>
-    <div id="generatorBox" style="width: 720px; height: 720px;">
-        <!-- Encrypted image forms here -->
+    <div style="display: inline-block">
+        <div id='decryptorBox' style="width: 720px; height: 720px; display: inline-block; position: relative;">
+            <!-- Decrypted image forms here -->
+        </div>
+        <div id='encryptorBox' style="width: 720px; height: 720px; background-color: rgba(0, 0, 0, 0); display: inline-block; position: absolute; top: 0; left: 0;">
+            <!-- Encrypted image forms here -->
+        </div>
     </div>
+    <div style='display: inline-block; vertical-align: top; margin: 20% 13%'>
+        <h1><span>Decrypting: &nbsp;</span><span id='progress'></span><span>%</span></h1>
+    </div>
+    <!-- <button onclick="decrypt()">decrypt</button> -->
 </body>
 </html>

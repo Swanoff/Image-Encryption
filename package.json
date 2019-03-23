@@ -20,6 +20,7 @@
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
-    "get-pixels": "^3.3.2"
+    "get-pixels": "^3.3.2",
+    "jimp": "^0.6.0"
   }
 }
