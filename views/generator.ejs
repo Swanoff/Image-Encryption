@@ -67,12 +67,48 @@
             {   
                 $('#progress').text(Math.round(((i+1)/(<%= width*height %>))*100));
                 e = $('#encryptorBox').children()[i];
-                $(e).hide();
+                $(e).css('background-color', 'rgba(0, 0, 0, 0)');
                 await sleep(1);
             }
+            $('#completion').show()
+            await sleep(200)
+            $('#completion').hide()
+            await sleep(200)
+            $('#completion').show()
+            await sleep(200)
+            $('#completion').hide()
+            await sleep(200)
+            $('#completion').show()
         }
 
-        setTimeout(decrypt(), 1000)
+        $('#decrypting').hide()
+        $('#invalid').hide()
+        $('#completion').hide()
+
+        $('#decrypt').click(async() => {
+            key = $('input:text').val()
+            
+            if( key == 'FFA3842AD105BC7E')
+            {
+                $('#invalid').hide()
+                $('#key_input').hide()
+                $('#decrypting').show()
+                decrypt()
+            }
+            else
+            {
+                $('#invalid').show()
+                await sleep(200)
+                $('#invalid').hide()
+                await sleep(200)
+                $('#invalid').show()
+                await sleep(200)
+                $('#invalid').hide()
+                await sleep(200)
+                $('#invalid').show()
+            }
+        })
+
     });
 </script>
 
@@ -85,8 +121,26 @@
             <!-- Encrypted image forms here -->
         </div>
     </div>
-    <div style='display: inline-block; vertical-align: top; margin: 20% 13%'>
-        <h1><span>Decrypting: &nbsp;</span><span id='progress'></span><span>%</span></h1>
+    <div style='display: inline-block; vertical-align: top; margin-top: 10%; margin-left: 8%; width: 33%;'>
+        <div id='key_input'>
+            <div class='ui massive left icon input'>
+                <i class='key icon'></i>
+                <input type="text" name='key' placeholder="Enter key to decrypt" autocomplete="off">
+            </div>
+            <div id='decrypt' class='ui big circular blue button' style="float: right; margin-top: 1.5%;">
+                Decrypt
+            </div>
+        </div>
+        <div id='invalid' class='ui massive circular label' style="margin-top: 20%; margin-left: 30%;">
+            <i class='red exclamation triangle icon'></i>
+            Invalid Key
+        </div>
+        <div id='decrypting' style="padding-left: 30%">
+            <h1><span>Decrypting: &nbsp;</span><span id='progress'></span><span>%</span></h1>
+            <div id='completion' class='ui massive circular green label' style='margin-top: 40%'>
+                Decryption Success
+            </div>
+        </div>
     </div>
     <!-- <button onclick="decrypt()">decrypt</button> -->
 </body>

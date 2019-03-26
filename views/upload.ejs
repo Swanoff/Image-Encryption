@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Image Encryptor</title>
+    <!-- CDN for Bootstrap v3.3.7 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- CDN for Semantic UI v2.3.3 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.3/semantic.min.css">
+    <!-- CDN for jQuery 2.1.1 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>
+
+<style>
+    body
+    {
+        background-color: rgba(0, 0, 0, 0.8)
+    }
+
+    .ui.input input[type="file"] 
+    {
+        display: none;
+    }
+
+    .ui.input{
+        position: fixed;
+        top: 30%;
+        left: 38%;
+    }
+</style>
+
+<script>
+    $(document).ready(function(){
+        $("input:text").click(function () {
+            $(this).parent().find("input:file").click();
+        });
+
+        $('input:file', '.ui.input')
+            .on('change', function (e) {
+                var name = e.target.files[0].name;
+                $('input:text', $(e.target).parent()).val(name);
+            });
+        
+        $('#iconSubmit').click(function() {
+            $('form#fileUpload').submit();
+        });          
+    });
+</script>
+
+<body>
+    <h1 style="color: white; position: fixed; top: 15%; left: 42%;">Image Encryptor</h1>
+    <form action="/upload" enctype="multipart/form-data" method="post" id="fileUpload">
+        <div class="ui massive left icon input">
+            <i class='image icon'></i>
+            <input type="text" placeholder="Select an image" readonly>
+            <input type="file" name="upload" multiple>
+        </div>
+        <div class='ui massive left icon input' style="display: block; top: 45% !important;">
+            <i class='key icon'></i>
+            <input type="text" name='key' placeholder="Enter key to encrypt" autocomplete="off">
+        </div>
+        <!-- <input type="file" name='image'>
+        <input type="text" name='key'> -->
+        <button class='ui big primary circular button' id="iconSubmit" style="position: fixed; top: 60%; left: 44%;">
+            <i class='lock icon'></i>
+            Encrypt
+        </button>
+    </form>
+</body>
+</html>
